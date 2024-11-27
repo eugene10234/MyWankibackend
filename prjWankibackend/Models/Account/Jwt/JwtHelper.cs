@@ -9,6 +9,7 @@ using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using NuGet.Common;
+using prjWankibackend.Configurations.Authentication;
 using prjWankibackend.Models.Account.IAccount.Implements.Google;
 using prjWankibackend.Models.Account.Interfaces;
 using prjWankibackend.Models.Account.Jwt;
@@ -90,8 +91,10 @@ namespace prjWankibackend.Models.Account.Jwt
                 // 配置策略方案
                 options.ForwardDefaultSelector = context =>
                 {
+                    // 從請求標頭獲取 Authorization
                     string authorization = context.Request.Headers[HeaderNames.Authorization];
 
+                    // 如果沒有 Authorization 標頭，返回 Google 方案
                     if (string.IsNullOrEmpty(authorization) || !authorization.StartsWith("Bearer "))
                     {
                         return "CustomJWT"; // 或返回其他默認值

@@ -35,6 +35,7 @@ namespace prjWankibackend.Controllers.Account
         [HttpPost("jwtPersonLogin")]
         public IActionResult PostjwtPersonLogin(LoginData loginData)
         {
+
             var user = _context.TPersonMembers.FindUser(loginData);
             if (user == null) return Ok(new webMsg("wrong_input"));
             JwtUserModel jwtModel = (JwtUserModel)user;

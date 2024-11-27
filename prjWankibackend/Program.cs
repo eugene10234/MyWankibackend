@@ -22,6 +22,13 @@ using prjWankibackend.Controllers.Account.Services.EmailSender;
 using prjWankibackend.Controllers.Account.Services.Password;
 using prjWankibackend.Controllers.Account.Services.UserRepos;
 using prjWankibackend.Controllers.Member.Services.Member;
+using prjWankibackend.Extensions;
+using prjWankibackend.Configurations.Authentication;
+using prjWankibackend.Services.Authentication.Jwt;
+using prjWankibackend.Services.Authentication.TokenValidation;
+using prjWankibackend.Services.IAccount;
+using prjWankibackend.Configurations;
+
 //using prjWankibackend.Controllers.Account.Services.Jwt;
 
 
@@ -106,8 +113,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             }
         };
     });
+builder.Services.AddServiceConfigures(builder.Configuration);
 
+// 添加認證服務
+builder.Services.AddCustomAuthentication();
 var app = builder.Build();
+
 
 MyScopesDI(app);
 // Configure the HTTP request pipeline.
@@ -132,6 +143,7 @@ app.UseCors("AllowAngular");
 //請加入以下兩行在 app.UseHttpsRedirection(); 後面
 app.UseAuthentication(); // 添加驗證中間件
 app.UseAuthorization();
+app.UseBlacklistValidation();
 app.UseSession();
 app.MapControllers();
 app.MapHub<ChatHub>("ChatHub");
@@ -154,10 +166,11 @@ static void AddMyService(WebApplicationBuilder builder)
     JwtHelper.GoogleConfig = googleConfig;
     JwtHelper jwtHelper = new JwtHelper();
 
-    builder.Services.Configure<JwtConfig>(
-        builder.Configuration.GetSection("JwtConfig"));
-    builder.Services.Configure<GoogleConfig>(
-        builder.Configuration.GetSection("GoogleConfig"));
+    // 註冊 JwtConfig
+    builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
+    // 註冊 GoogleConfig
+    builder.Services.Configure<GoogleConfig>(builder.Configuration.GetSection("GoogleConfig"));
+
     // 或者如果你想要直接注入 JwtConfig 實例
     builder.Services.AddSingleton(builder.Configuration
         .GetSection("JwtConfig")
@@ -181,13 +194,16 @@ static void AddMyService(WebApplicationBuilder builder)
     // 如果只需要 PasswordHasher
     builder.Services.AddScoped<IPasswordHasher<TPersonMember>, PasswordHasher<TPersonMember>>();
 
-    // 註冊您的 SignupService
+    // 註冊您的 Service
     builder.Services.AddScoped<ISignupService, SignupService>();
     builder.Services.AddScoped<IMemberService, MemberService>();
     builder.Services.AddScoped<IPasswordService, PasswordService>();
     builder.Services.AddScoped<IUserRepository, UserRepository>();
     builder.Services.AddScoped<IEmailSender, EmailSender>();
-    
+    builder.Services.AddScoped<IJwtService, JwtService>();
+    builder.Services.AddScoped<ITokenValidationService, TokenValidationService>();
+    builder.Services.AddAbstractServiceScopes();
+
     // 註冊 JWT 服務
     //builder.Services.AddScoped<IJwtService, JwtService>();
     //// 加入日誌服務
@@ -204,8 +220,8 @@ static void AddMyService(WebApplicationBuilder builder)
 
     //将JwtHelper添加到Services里面
     builder.Services.AddSingleton<JwtHelper>(jwtHelper);
-    jwtHelper.AddJwtService(builder.Services);
-    jwtHelper.ConfigureServices(builder.Services);
+    //jwtHelper.AddJwtService(builder.Services);
+    //jwtHelper.ConfigureServices(builder.Services);
 
 }
 static void MyScopesDI(WebApplication app)

@@ -39,8 +39,8 @@ namespace prjWankibackend.Controllers.Member
             return new webMsg((JwtUserDTO)user);
         }
         [HttpGet("profileOninit")]
-        [Authorize]
-        //[Authorize("CustomPolicy")]
+        //[Authorize]
+        [Authorize("CustomPolicy")]
         public async Task<IActionResult> profileOninit()
         {
             var authenticationType = User.Identity?.AuthenticationType;

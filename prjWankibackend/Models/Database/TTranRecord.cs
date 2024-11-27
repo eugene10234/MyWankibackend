@@ -11,7 +11,7 @@ public partial class TTranRecord
 
     public string FMemberId { get; set; }
 
-    public string FStockId { get; set; }
+    public int FStockId { get; set; }
 
     public string FBrokerId { get; set; }
 

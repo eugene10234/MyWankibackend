@@ -1,7 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace prjWankibackend.Models.Account.Jwt
+namespace prjWankibackend.Configurations.Authentication
 {
     public class JwtConfig
     {
@@ -51,6 +51,23 @@ namespace prjWankibackend.Models.Account.Jwt
         /// 认证用的密钥
         /// </summary>
         public SymmetricSecurityKey SymmetricSecurityKey => new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey));
+
+        public TokenValidationParameters ValidationParameters => new TokenValidationParameters
+        {
+            //Token頒發機構
+            ValidIssuer = Issuer,
+            //頒給誰
+            ValidAudience = Audience,
+            //這裡的key要進行加密
+            IssuerSigningKey = SymmetricSecurityKey,
+            //是否驗證Token有效期，使用當前時間與Token的Claims中的NotBefore和Expires對比
+            ValidateLifetime = true,
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateIssuerSigningKey = true,
+            RequireExpirationTime = true,
+            ClockSkew = TimeSpan.FromSeconds(30)//緩衝時間，預設五分鐘
+        };
     }
 
 }

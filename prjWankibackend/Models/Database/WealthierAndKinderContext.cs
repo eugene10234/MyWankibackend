@@ -13,6 +13,8 @@ public partial class WealthierAndKinderContext : DbContext
     {
     }
 
+    public virtual DbSet<TBlacklist> TBlacklists { get; set; }
+
     public virtual DbSet<TBlock> TBlocks { get; set; }
 
     public virtual DbSet<TBroker> TBrokers { get; set; }
@@ -87,6 +89,22 @@ public partial class WealthierAndKinderContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<TBlacklist>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Blacklis__3214EC07B4CE1EF9");
+
+            entity.ToTable("tBlacklists");
+
+            entity.HasIndex(e => e.BlockedUserId, "IX_Blacklists_BlockedUserId");
+
+            entity.HasIndex(e => e.IsActive, "IX_Blacklists_IsActive");
+
+            entity.Property(e => e.BlockedUserId).IsRequired();
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getutcdate())");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.Reason).HasMaxLength(500);
+        });
+
         modelBuilder.Entity<TBlock>(entity =>
         {
             entity.HasKey(e => e.FBlockSid);
@@ -691,13 +709,15 @@ public partial class WealthierAndKinderContext : DbContext
 
         modelBuilder.Entity<TOrderDetail>(entity =>
         {
-            entity.HasKey(e => e.FOrderDetailId);
+            entity
+                .HasNoKey()
+                .ToTable("tOrderDetail");
 
-            entity.ToTable("tOrderDetail");
-
-            entity.Property(e => e.FOrderDetailId).HasColumnName("fOrderDetailId");
             entity.Property(e => e.FAmount).HasColumnName("fAmount");
             entity.Property(e => e.FHelpPoint).HasColumnName("fHelpPoint");
+            entity.Property(e => e.FOrderDetailId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("fOrderDetailId");
             entity.Property(e => e.FOrderId).HasColumnName("fOrderId");
             entity.Property(e => e.FProductId).HasColumnName("fProductId");
         });
@@ -1015,7 +1035,9 @@ public partial class WealthierAndKinderContext : DbContext
 
             entity.ToTable("tTranRecord");
 
-            entity.Property(e => e.FTranId).HasColumnName("fTranId");
+            entity.Property(e => e.FTranId)
+                .ValueGeneratedNever()
+                .HasColumnName("fTranId");
             entity.Property(e => e.FBrokerId)
                 .IsRequired()
                 .HasMaxLength(50)
@@ -1028,11 +1050,7 @@ public partial class WealthierAndKinderContext : DbContext
                 .IsRequired()
                 .HasMaxLength(50)
                 .HasColumnName("fMemberId");
-            entity.Property(e => e.FStockId)
-                .IsRequired()
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("fStockId");
+            entity.Property(e => e.FStockId).HasColumnName("fStockId");
             entity.Property(e => e.FStockPrice)
                 .HasColumnType("money")
                 .HasColumnName("fStockPrice");

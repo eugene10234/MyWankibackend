@@ -2,6 +2,7 @@
 using prjWankibackend.Models.Account.Interfaces;
 using prjWankibackend.Models.Account.Jwt;
 using prjWankibackend.Models.Database;
+using prjWankibackend.Services.IAccount.Interfaces;
 
 namespace prjWankibackend.Models.Account.IAccount
 {
@@ -17,7 +18,7 @@ namespace prjWankibackend.Models.Account.IAccount
 
             foreach (var t in typeof(ExternalAccountHelper).Assembly.GetTypes())
             {
-                if (typeof(IAccountFactory).IsAssignableFrom(t) && !t.IsInterface)
+                if (typeof(IAccountServiceFactory).IsAssignableFrom(t) && !t.IsInterface)
                 {
                     _namedAccountFactories.Add(Tuple.Create(
                         t.Name.Replace("AccountFactory", string.Empty), (IAccountFactory)Activator.CreateInstance(t)));

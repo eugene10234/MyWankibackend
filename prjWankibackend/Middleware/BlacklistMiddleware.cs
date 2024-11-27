@@ -21,7 +21,7 @@ namespace prjWankibackend.Middleware
             // 檢查是否為需要驗證的路徑
             if (ShouldCheckBlacklist(context))
             {
-                var userId = context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                var userId = context.User?.FindFirst("UserId")?.Value;
 
                 if (!string.IsNullOrEmpty(userId))
                 {

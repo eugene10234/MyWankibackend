@@ -1,0 +1,77 @@
+﻿@model IEnumerable<prjWankibackend.Models.Database.TProduct>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FProductCategoryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FSponsorId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FSales)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FStock)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FUnitlHelpPoint)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FProductCategoryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FSponsorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FSales)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FStock)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FUnitlHelpPoint)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FStatus)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.FProductId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.FProductId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.FProductId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

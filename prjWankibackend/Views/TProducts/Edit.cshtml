@@ -1,0 +1,69 @@
+﻿@model prjWankibackend.Models.Database.TProduct
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>TProduct</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="FProductId" />
+            <div class="form-group">
+                <label asp-for="FProductCategoryId" class="control-label"></label>
+                <input asp-for="FProductCategoryId" class="form-control" />
+                <span asp-validation-for="FProductCategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FSponsorId" class="control-label"></label>
+                <input asp-for="FSponsorId" class="form-control" />
+                <span asp-validation-for="FSponsorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FProductname" class="control-label"></label>
+                <input asp-for="FProductname" class="form-control" />
+                <span asp-validation-for="FProductname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FDescription" class="control-label"></label>
+                <input asp-for="FDescription" class="form-control" />
+                <span asp-validation-for="FDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FSales" class="control-label"></label>
+                <input asp-for="FSales" class="form-control" />
+                <span asp-validation-for="FSales" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FStock" class="control-label"></label>
+                <input asp-for="FStock" class="form-control" />
+                <span asp-validation-for="FStock" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FUnitlHelpPoint" class="control-label"></label>
+                <input asp-for="FUnitlHelpPoint" class="form-control" />
+                <span asp-validation-for="FUnitlHelpPoint" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FStatus" class="control-label"></label>
+                <input asp-for="FStatus" class="form-control" />
+                <span asp-validation-for="FStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

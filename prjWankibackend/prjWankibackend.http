@@ -1,0 +1,6 @@
+@prjWankibackend_HostAddress = http://localhost:5002
+
+GET {{prjWankibackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

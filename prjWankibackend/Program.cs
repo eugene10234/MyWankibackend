@@ -16,18 +16,18 @@ using prjWankibackend.DTO.help;
 using prjWankibackend.Models.Account.Interfaces;
 using Google;
 using Microsoft.AspNetCore.Identity;
-using prjWankibackend.Controllers.Account.Services.Signup;
 using Microsoft.Extensions.Logging;
-using prjWankibackend.Controllers.Account.Services.EmailSender;
-using prjWankibackend.Controllers.Account.Services.Password;
-using prjWankibackend.Controllers.Account.Services.UserRepos;
-using prjWankibackend.Controllers.Member.Services.Member;
 using prjWankibackend.Extensions;
 using prjWankibackend.Configurations.Authentication;
 using prjWankibackend.Services.Authentication.Jwt;
 using prjWankibackend.Services.Authentication.TokenValidation;
-using prjWankibackend.Services.IAccount;
+
 using prjWankibackend.Configurations;
+using prjWankibackend.Services.Account.Email;
+using prjWankibackend.Services.Account.Password;
+using prjWankibackend.Services.Account.UserRepos;
+using prjWankibackend.Services.Account.Signup;
+using prjWankibackend.Services.Account.Member;
 
 //using prjWankibackend.Controllers.Account.Services.Jwt;
 
@@ -114,7 +114,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 builder.Services.AddServiceConfigures(builder.Configuration);
-
+builder.Services.AddServicesScopes();
 // 添加認證服務
 builder.Services.AddCustomAuthentication();
 var app = builder.Build();
@@ -195,14 +195,14 @@ static void AddMyService(WebApplicationBuilder builder)
     builder.Services.AddScoped<IPasswordHasher<TPersonMember>, PasswordHasher<TPersonMember>>();
 
     // 註冊您的 Service
-    builder.Services.AddScoped<ISignupService, SignupService>();
-    builder.Services.AddScoped<IMemberService, MemberService>();
-    builder.Services.AddScoped<IPasswordService, PasswordService>();
-    builder.Services.AddScoped<IUserRepository, UserRepository>();
-    builder.Services.AddScoped<IEmailSender, EmailSender>();
-    builder.Services.AddScoped<IJwtService, JwtService>();
-    builder.Services.AddScoped<ITokenValidationService, TokenValidationService>();
-    builder.Services.AddAbstractServiceScopes();
+    //builder.Services.AddScoped<ISignupService, SignupService>();
+    //builder.Services.AddScoped<IMemberService, MemberService>();
+    //builder.Services.AddScoped<IPasswordService, PasswordService>();
+    //builder.Services.AddScoped<IUserRepository, UserRepository>();
+    //builder.Services.AddScoped<IEmailSender, EmailSender>();
+    //builder.Services.AddScoped<IJwtService, JwtService>();
+    //builder.Services.AddScoped<ITokenValidationService, TokenValidationService>();
+    //builder.Services.AddAbstractAccountServiceScopes();
 
     // 註冊 JWT 服務
     //builder.Services.AddScoped<IJwtService, JwtService>();

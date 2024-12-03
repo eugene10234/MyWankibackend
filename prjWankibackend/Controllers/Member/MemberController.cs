@@ -7,8 +7,8 @@ using prjWankibackend.Models.Account.Jwt;
 using prjWankibackend.Models.Account.Jwt.DTO;
 using prjWankibackend.Controllers.Member.DTO;
 using System.Security.Claims;
-using prjWankibackend.Controllers.Member.Services.Member;
 using prjWankibackend.Controllers.Account.DTO;
+using prjWankibackend.Services.Account.Member;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace prjWankibackend.Controllers.Member

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using prjWankibackend.Controllers.Account.DTO;
-using prjWankibackend.Controllers.Account.Services.Google;
+using prjWankibackend.Services.Account.Temp.Google;
 
 namespace prjWankibackend.Controllers.Account
 {

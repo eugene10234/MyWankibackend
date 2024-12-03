@@ -14,9 +14,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.EntityFrameworkCore;
-using prjWankibackend.Controllers.Account.Services.Password;
-using prjWankibackend.Controllers.Account.Services.Password.DTO;
 using prjWankibackend.Models.Account.Jwt;
+using prjWankibackend.Services.Account.Password;
+using prjWankibackend.Services.Account.Password.DTO;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

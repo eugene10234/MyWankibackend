@@ -7,7 +7,7 @@ using prjWankibackend.Services.Authentication.TokenValidation;
 
 using prjWankibackend.Services.Authentication;
 using prjWankibackend.Services.Account.Email;
-using prjWankibackend.Controllers.Member.Services.Member;
+
 using prjWankibackend.Services.Account.Password;
 using prjWankibackend.Services.Account.Signup;
 using prjWankibackend.Services.Account.UserRepos;
